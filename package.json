@@ -23,5 +23,17 @@
     "@types/react": "~19.1.0",
     "typescript": "~5.9.2"
   },
-  "private": true
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/tip-calculator.git"
+  },
+  "keywords": [
+    "tip-calculator",
+    "react-native",
+    "expo",
+    "calculator",
+    "mobile-app",
+    "typescript"
+  ]
 }
