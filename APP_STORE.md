@@ -19,7 +19,7 @@ Tip Calculator is a super clean, one-screen app that does exactly one thing: cal
 - Dark mode support
 
 **Smart & Helpful**
-- Quick tip presets (10%, 15%, 18%, 20%) or custom percentage
+- Quick tip presets or custom percentage
 - Split bill between multiple people
 - Remembers your preferences
 - Haptic feedback for better interaction

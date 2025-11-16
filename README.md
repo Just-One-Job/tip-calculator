@@ -8,7 +8,7 @@ A super clean, one-screen Tip Calculator app built with React Native and Expo. T
 
 ### Core Functionality
 - **Bill Amount Input** - Numeric keypad with real-time validation
-- **Tip Percentage Selector** - Quick presets (10%, 15%, 18%, 20%) or custom percentage
+- **Tip Percentage Selector** - Quick presets or custom percentage
 - **Split Bill** - Divide the total between 1-10+ people
 - **Real-time Calculations** - Instant updates as you input values
 - **Summary Display** - Shows tip amount, total with tip, and per-person total

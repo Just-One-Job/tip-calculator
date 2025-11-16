@@ -15,7 +15,7 @@ We aim to respond to all inquiries within 24-48 hours.
 ### How do I calculate a tip?
 
 1. Enter your bill amount using the numeric keypad
-2. Select a tip percentage (10%, 15%, 18%, 20%, or tap "Custom" for a different amount)
+2. Select a tip percentage (or tap "Custom" for a different amount)
 3. Optionally, use the +/- buttons to split the bill between multiple people
 4. View your results in the summary section
 

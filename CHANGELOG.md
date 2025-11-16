@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial release of Tip Calculator
 - Bill amount input with numeric keypad
-- Tip percentage selector with presets (10%, 15%, 18%, 20%) and custom option
+- Tip percentage selector with presets and custom option
 - Split bill functionality (1-10+ people)
 - Real-time calculation of tip amount, total with tip, and per-person total
 - Dark mode support with toggle switch
