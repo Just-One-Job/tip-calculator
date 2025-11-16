@@ -1,19 +1,15 @@
-import React from 'react';
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-} from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { StatusBar } from 'expo-status-bar';
-import { BillInput } from '../components/BillInput';
-import { TipPercentageSelector } from '../components/TipPercentageSelector';
-import { SplitSelector } from '../components/SplitSelector';
-import { ResultSummary } from '../components/ResultSummary';
-import { ThemeToggle } from '../components/ThemeToggle';
-import { useTipCalculator } from '../hooks/useTipCalculator';
-import { useTheme } from '../theme/ThemeContext';
-import { spacing } from '../theme/spacing';
+import React from "react";
+import { View, StyleSheet, ScrollView } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
+import { BillInput } from "../components/BillInput";
+import { TipPercentageSelector } from "../components/TipPercentageSelector";
+import { SplitSelector } from "../components/SplitSelector";
+import { ResultSummary } from "../components/ResultSummary";
+import { ThemeToggle } from "../components/ThemeToggle";
+import { useTipCalculator } from "../hooks/useTipCalculator";
+import { useTheme } from "../theme/ThemeContext";
+import { spacing } from "../theme/spacing";
 
 export const TipCalculatorScreen: React.FC = () => {
   const { colors, isDark } = useTheme();
@@ -24,11 +20,14 @@ export const TipCalculatorScreen: React.FC = () => {
     setTipPercent,
     incrementSplit,
     decrementSplit,
+    setSplitCount,
   } = useTipCalculator();
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <StatusBar style={isDark ? 'light' : 'dark'} />
+    <SafeAreaView
+      style={[styles.container, { backgroundColor: colors.background }]}
+    >
+      <StatusBar style={isDark ? "light" : "dark"} />
       <View style={styles.header}>
         <ThemeToggle />
       </View>
@@ -44,15 +43,16 @@ export const TipCalculatorScreen: React.FC = () => {
           onChange={setTipPercent}
         />
 
+        {state.billAmount > 0 && (
+          <ResultSummary result={result} splitCount={state.splitCount} />
+        )}
+
         <SplitSelector
           value={state.splitCount}
           onIncrement={incrementSplit}
           onDecrement={decrementSplit}
+          onChange={setSplitCount}
         />
-
-        {state.billAmount > 0 && (
-          <ResultSummary result={result} splitCount={state.splitCount} />
-        )}
       </ScrollView>
     </SafeAreaView>
   );
@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
+    flexDirection: "row",
+    justifyContent: "flex-end",
     padding: spacing.md,
     paddingBottom: 0,
   },
@@ -76,4 +76,3 @@ const styles = StyleSheet.create({
     paddingBottom: spacing.xl,
   },
 });
-

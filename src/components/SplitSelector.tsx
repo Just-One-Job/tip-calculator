@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
 import { useTheme } from '../theme/ThemeContext';
 import { spacing } from '../theme/spacing';
 import { triggerHaptic } from '../utils/haptics';
@@ -8,14 +8,18 @@ interface SplitSelectorProps {
   value: number;
   onIncrement: () => void;
   onDecrement: () => void;
+  onChange: (value: number) => void;
 }
 
 export const SplitSelector: React.FC<SplitSelectorProps> = ({
   value,
   onIncrement,
   onDecrement,
+  onChange,
 }) => {
   const { colors } = useTheme();
+  const [isEditing, setIsEditing] = useState(false);
+  const [editValue, setEditValue] = useState(value.toString());
 
   const handleIncrement = () => {
     triggerHaptic('light');
@@ -25,6 +29,29 @@ export const SplitSelector: React.FC<SplitSelectorProps> = ({
   const handleDecrement = () => {
     triggerHaptic('light');
     onDecrement();
+  };
+
+  const handleEditPress = () => {
+    triggerHaptic('light');
+    setIsEditing(true);
+    setEditValue(value.toString());
+  };
+
+  const handleEditSubmit = () => {
+    const numValue = parseInt(editValue, 10);
+    if (!isNaN(numValue) && numValue >= 1 && numValue <= 1000) {
+      triggerHaptic('success');
+      onChange(numValue);
+      setIsEditing(false);
+    } else {
+      // Reset to current value if invalid
+      setEditValue(value.toString());
+      setIsEditing(false);
+    }
+  };
+
+  const handleEditBlur = () => {
+    handleEditSubmit();
   };
 
   return (
@@ -48,12 +75,36 @@ export const SplitSelector: React.FC<SplitSelectorProps> = ({
             −
           </Text>
         </TouchableOpacity>
-        <View style={styles.valueContainer}>
-          <Text style={[styles.valueText, { color: colors.text }]}>{value}</Text>
-          <Text style={[styles.valueLabel, { color: colors.textSecondary }]}>
-            {value === 1 ? 'person' : 'people'}
-          </Text>
-        </View>
+        <TouchableOpacity
+          style={styles.valueContainer}
+          onPress={handleEditPress}
+          activeOpacity={0.7}
+        >
+          {isEditing ? (
+            <TextInput
+              style={[styles.valueInput, { color: colors.text }]}
+              value={editValue}
+              onChangeText={(text) => {
+                const numericText = text.replace(/[^0-9]/g, '');
+                if (numericText === '' || (parseInt(numericText, 10) >= 1 && parseInt(numericText, 10) <= 1000)) {
+                  setEditValue(numericText);
+                }
+              }}
+              onBlur={handleEditBlur}
+              onSubmitEditing={handleEditSubmit}
+              keyboardType="number-pad"
+              autoFocus
+              selectTextOnFocus
+            />
+          ) : (
+            <>
+              <Text style={[styles.valueText, { color: colors.text }]}>{value}</Text>
+              <Text style={[styles.valueLabel, { color: colors.textSecondary }]}>
+                {value === 1 ? 'person' : 'people'}
+              </Text>
+            </>
+          )}
+        </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, { backgroundColor: colors.primary }]}
           onPress={handleIncrement}
@@ -101,6 +152,12 @@ const styles = StyleSheet.create({
   valueText: {
     fontSize: 32,
     fontWeight: '700',
+  },
+  valueInput: {
+    fontSize: 32,
+    fontWeight: '700',
+    textAlign: 'center',
+    minWidth: 80,
   },
   valueLabel: {
     fontSize: 14,

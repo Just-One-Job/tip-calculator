@@ -104,7 +104,7 @@ export const BillInput: React.FC<BillInputProps> = ({ value, onChange }) => {
           }}
           placeholder="0.00"
           placeholderTextColor={colors.textSecondary}
-          keyboardType="numeric"
+          keyboardType="decimal-pad"
           returnKeyType="done"
           onSubmitEditing={Keyboard.dismiss}
         />

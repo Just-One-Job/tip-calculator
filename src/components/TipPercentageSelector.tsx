@@ -16,7 +16,7 @@ interface TipPercentageSelectorProps {
   onChange: (percent: number) => void;
 }
 
-const PRESET_PERCENTAGES = [10, 15, 18, 20];
+const PRESET_PERCENTAGES = [15, 18, 20, 22];
 
 export const TipPercentageSelector: React.FC<TipPercentageSelectorProps> = ({
   value,
@@ -39,7 +39,7 @@ export const TipPercentageSelector: React.FC<TipPercentageSelectorProps> = ({
 
   const handleCustomSubmit = () => {
     const numericValue = parseFloat(customValue);
-    if (!isNaN(numericValue) && numericValue >= 0 && numericValue <= 100) {
+    if (!isNaN(numericValue) && numericValue >= 0 && numericValue <= 500) {
       triggerHaptic('success');
       onChange(numericValue);
       setShowCustomModal(false);
@@ -107,16 +107,16 @@ export const TipPercentageSelector: React.FC<TipPercentageSelectorProps> = ({
               style={[styles.modalInput, { borderColor: colors.border, color: colors.text }]}
               value={customValue}
               onChangeText={(text) => {
-                // Allow numbers and one decimal point, max 100
+                // Allow numbers and one decimal point, max 500
                 const numericText = text.replace(/[^0-9.]/g, '');
                 const parts = numericText.split('.');
                 // Prevent multiple decimals
                 const cleaned = parts.length > 2 
                   ? parts[0] + '.' + parts.slice(1).join('') 
                   : numericText;
-                // Limit to 100
+                // Limit to 500
                 const numValue = parseFloat(cleaned);
-                if (isNaN(numValue) || numValue <= 100) {
+                if (isNaN(numValue) || numValue <= 500) {
                   setCustomValue(cleaned);
                 }
               }}
