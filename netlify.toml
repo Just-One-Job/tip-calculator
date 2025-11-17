@@ -1,0 +1,23 @@
+[build]
+  # Base directory for the build
+  base = "."
+  
+  # Build command - installs deps and builds the tip-calculator app
+  command = "npm run build:netlify:tip"
+  
+  # Publish directory - where the built files are
+  publish = "apps/tip-calculator/dist"
+
+[build.environment]
+  # Use Node.js 22 (matching your local setup)
+  NODE_VERSION = "22"
+  
+  # Enable npm workspaces
+  NPM_FLAGS = "--legacy-peer-deps"
+
+# Redirects for SPA routing (if needed)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+

@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { useTheme } from '../theme/ThemeContext';
-import { spacing } from '../theme/spacing';
+import { useTheme, spacing } from '@just-one-job/theme';
 import { TipResult } from '../types';
 
 interface ResultSummaryProps {

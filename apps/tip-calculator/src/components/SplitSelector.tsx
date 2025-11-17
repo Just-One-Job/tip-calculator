@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, TextInput } from 'react-native';
-import { useTheme } from '../theme/ThemeContext';
-import { spacing } from '../theme/spacing';
-import { triggerHaptic } from '../utils/haptics';
+import { useTheme, spacing } from '@just-one-job/theme';
+import { triggerHaptic } from '@just-one-job/utils';
 
 interface SplitSelectorProps {
   value: number;

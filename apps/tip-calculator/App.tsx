@@ -1,12 +1,12 @@
 import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { ThemeProvider } from './src/theme/ThemeContext';
+import { ThemeProvider } from '@just-one-job/theme';
 import { TipCalculatorScreen } from './src/screens/TipCalculatorScreen';
 
 export default function App() {
   return (
     <SafeAreaProvider>
-      <ThemeProvider>
+      <ThemeProvider storageKey="@tip_calculator_theme">
         <TipCalculatorScreen />
       </ThemeProvider>
     </SafeAreaProvider>
