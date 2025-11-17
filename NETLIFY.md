@@ -11,10 +11,10 @@ This monorepo uses Bun's `workspace:*` protocol for workspace dependencies, whic
 
 The build process on Netlify:
 
-1. Runs `prepare:npm` script which converts `workspace:*` to `file:` paths
-2. Installs dependencies using npm workspaces
-3. Builds the tip-calculator app
-4. Publishes the `apps/tip-calculator/dist` directory
+1. **Automatic `preinstall` hook**: Before `npm install` runs, the `preinstall` script automatically converts `workspace:*` to `file:` paths
+2. **Dependency installation**: Netlify runs `npm install` at the root (monorepo-aware)
+3. **Build**: Runs `npm --workspace=apps/tip-calculator run build:web` to build the app
+4. **Publish**: Publishes the `apps/tip-calculator/dist` directory
 
 ## Configuration
 
@@ -27,8 +27,8 @@ The `netlify.toml` file configures:
 
 ### Scripts
 
-- `prepare:npm`: Converts workspace dependencies for npm compatibility
-- `build:netlify:tip`: Full build process for Netlify
+- `preinstall`: Automatically runs before `npm install` to convert workspace dependencies (only when using npm, skips when using bun)
+- `build:netlify:tip`: Builds the tip-calculator app using npm workspaces
 
 ## Adding New Apps
 
@@ -41,15 +41,38 @@ When adding a new app that needs to be deployed:
 
 2. Create a new Netlify site or update `netlify.toml` with app-specific settings
 
+## Local npm Usage
+
+If you need to use `npm install` locally (instead of `bun install`), you must convert the workspace dependencies first:
+
+```bash
+npm run prepare:npm && npm install
+```
+
+Or use the convenience script:
+
+```bash
+npm run install:npm
+```
+
+**Note**: The `preinstall` hook doesn't run early enough for npm to parse workspace dependencies, so manual conversion is required for local npm usage. This is automatic on Netlify CI.
+
 ## Troubleshooting
 
 ### Build fails with "workspace:*" error
 
 - Make sure `prepare:npm` script runs before `npm install`
 - Check that `NETLIFY=true` environment variable is set (automatically set by Netlify)
+- For local npm usage, run `npm run prepare:npm` first
 
 ### Dependencies not found
 
 - Ensure all workspace packages are listed in `scripts/prepare-npm-workspaces.js`
 - Verify package paths are correct relative to the app directory
+
+### Can't run `npm install` locally
+
+- Use `bun install` instead (recommended for local development)
+- Or run `npm run install:npm` which converts dependencies first
+- Or manually run `npm run prepare:npm && npm install`
 

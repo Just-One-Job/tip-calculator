@@ -18,15 +18,33 @@ const workspacePackages = {
   '@just-one-job/utils': '../../packages/utils',
 };
 
-// Check if we're in CI or using npm
-const isCI = process.env.CI === 'true' || process.env.NETLIFY === 'true';
-const isNpm = process.env.npm_execpath && process.env.npm_execpath.includes('npm');
+// Check if we're actually using bun (not npm)
+// Bun sets BUN_INSTALL=1 during install, or npm_execpath points to bun
+// Key indicator: npm ALWAYS sets npm_config_user_config, bun does not
+const isBunInstall = (
+  process.env.BUN_INSTALL === '1' ||
+  (process.env.npm_execpath && (
+    process.env.npm_execpath.includes('bun') || 
+    process.env.npm_execpath.endsWith('bun')
+  )) ||
+  // If npm_config_user_config is undefined, it's likely bun (npm always sets it)
+  (process.env.npm_lifecycle_event === 'preinstall' && process.env.npm_config_user_config === undefined)
+);
 
-// Only convert if in CI or using npm
-if (!isCI && !isNpm) {
+// Check if npm is explicitly running (npm ALWAYS sets npm_config_user_config)
+const isNpmRunning = process.env.npm_config_user_config !== undefined;
+
+// Skip conversion if:
+// 1. It's a bun install (BUN_INSTALL=1, npm_execpath points to bun, or npm_config_user_config is undefined)
+// 2. Not in CI
+// 3. Not explicitly npm (npm sets npm_config_user_config)
+if (isBunInstall && !process.env.CI && !process.env.NETLIFY && !isNpmRunning) {
   console.log('Skipping npm workspace conversion (using bun locally)');
   process.exit(0);
 }
+
+// Otherwise, we're using npm (or in CI), so convert workspace:* to file: paths
+console.log('Converting workspace:* dependencies to file: paths for npm compatibility...');
 
 function updatePackageJson(packageJsonPath) {
   const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
