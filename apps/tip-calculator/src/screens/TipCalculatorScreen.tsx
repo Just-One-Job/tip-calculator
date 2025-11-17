@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import { View, StyleSheet, ScrollView, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { BillInput } from "../components/BillInput";
@@ -28,6 +28,14 @@ export const TipCalculatorScreen: React.FC = () => {
     >
       <StatusBar style={isDark ? "light" : "dark"} />
       <View style={styles.header}>
+        <View style={styles.titleContainer}>
+          <Text style={[styles.title, { color: colors.text }]}>
+            Tip & Split
+          </Text>
+          <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
+            Calculate tips and split bills
+          </Text>
+        </View>
         <ThemeToggle />
       </View>
       <ScrollView
@@ -63,15 +71,31 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: "row",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
     padding: spacing.md,
-    paddingBottom: 0,
+    paddingBottom: spacing.sm,
+  },
+  titleContainer: {
+    flex: 1,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: "700",
+    marginBottom: spacing.xs / 2,
+  },
+  subtitle: {
+    fontSize: 12,
+    fontWeight: "500",
+    textTransform: "uppercase",
+    letterSpacing: 0.5,
   },
   scrollView: {
     flex: 1,
   },
   scrollContent: {
     padding: spacing.md,
+    paddingTop: 0,
     paddingBottom: spacing.xl,
   },
 });
