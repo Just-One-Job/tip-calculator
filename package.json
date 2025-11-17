@@ -8,6 +8,8 @@
   "scripts": {
     "dev:tip": "cd apps/tip-calculator && bunx expo start",
     "web:tip": "cd apps/tip-calculator && bunx expo start --web",
-    "build:web:tip": "cd apps/tip-calculator && bun run build:web"
+    "build:web:tip": "cd apps/tip-calculator && bun run build:web",
+    "prepare:npm": "node scripts/prepare-npm-workspaces.js",
+    "build:netlify:tip": "npm run prepare:npm && npm install && cd apps/tip-calculator && npm run build:web"
   }
 }
