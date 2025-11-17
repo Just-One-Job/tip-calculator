@@ -8,8 +8,7 @@ import { SplitSelector } from "../components/SplitSelector";
 import { ResultSummary } from "../components/ResultSummary";
 import { ThemeToggle } from "../components/ThemeToggle";
 import { useTipCalculator } from "../hooks/useTipCalculator";
-import { useTheme } from "../theme/ThemeContext";
-import { spacing } from "../theme/spacing";
+import { useTheme, spacing } from "@just-one-job/theme";
 
 export const TipCalculatorScreen: React.FC = () => {
   const { colors, isDark } = useTheme();

@@ -12,9 +12,15 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-const THEME_STORAGE_KEY = '@tip_calculator_theme';
+interface ThemeProviderProps {
+  children: ReactNode;
+  storageKey?: string;
+}
 
-export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({ 
+  children, 
+  storageKey = '@app_theme' 
+}) => {
   const systemColorScheme = useRNColorScheme();
   const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
 
@@ -22,7 +28,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     // Load saved theme preference or use system default
     const loadTheme = async () => {
       try {
-        const savedTheme = await AsyncStorage.getItem(THEME_STORAGE_KEY);
+        const savedTheme = await AsyncStorage.getItem(storageKey);
         if (savedTheme === 'light' || savedTheme === 'dark') {
           setColorScheme(savedTheme);
         } else if (systemColorScheme === 'dark') {
@@ -37,13 +43,13 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     };
 
     loadTheme();
-  }, [systemColorScheme]);
+  }, [systemColorScheme, storageKey]);
 
   const toggleTheme = async () => {
     const newScheme: ColorScheme = colorScheme === 'dark' ? 'light' : 'dark';
     setColorScheme(newScheme);
     try {
-      await AsyncStorage.setItem(THEME_STORAGE_KEY, newScheme);
+      await AsyncStorage.setItem(storageKey, newScheme);
     } catch (error) {
       console.error('Failed to save theme preference:', error);
     }

@@ -6,8 +6,8 @@
     "packages/*"
   ],
   "scripts": {
-    "dev:tip": "cd apps/tip-calculator && npx expo start",
-    "web:tip": "cd apps/tip-calculator && npx expo start --web",
-    "build:web:tip": "cd apps/tip-calculator && npm run build:web"
+    "dev:tip": "cd apps/tip-calculator && bunx expo start",
+    "web:tip": "cd apps/tip-calculator && bunx expo start --web",
+    "build:web:tip": "cd apps/tip-calculator && bun run build:web"
   }
 }
