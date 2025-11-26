@@ -28,7 +28,7 @@ microapps/
 ### Prerequisites
 
 - **Node.js** (v18 or later recommended)
-- **Bun** (recommended) or **npm** for package management
+- **Bun** for package management (npm is disabled in this project)
 - **Expo CLI** (optional, but recommended)
 - iOS Simulator (for Mac) or Android Emulator, or Expo Go app on your device
 
@@ -43,21 +43,15 @@ microapps/
 2. **Install dependencies**
    ```bash
    bun install
-   # or
-   npm install
    ```
 
 3. **Start development server for an app**
    ```bash
    # Tip Calculator
    bun run dev:tip
-   # or
-   npm run dev:tip
-   
+
    # Deal & Steal
    bun run dev:deal
-   # or
-   npm run dev:deal
    ```
 
 4. **Run on your platform**
@@ -92,9 +86,9 @@ Each app has its own scripts (see individual app directories):
 
 ### Workspace Dependencies
 
-This monorepo uses npm workspaces with `file:` links for workspace dependencies. This approach:
-- ✅ Works with npm (used by Netlify CI)
-- ✅ Works with Bun (for local development)
+This monorepo uses workspaces with `file:` links for workspace dependencies. This approach:
+- ✅ Works with Bun (primary package manager)
+- ✅ Works with npm (for Netlify CI compatibility)
 - ✅ No conversion scripts needed
 - ✅ Simple and reliable
 
@@ -114,7 +108,7 @@ Use EAS Build for iOS and Android:
 
 ```bash
 # Install EAS CLI globally
-npm install -g eas-cli
+bun add -g eas-cli
 
 # Build for iOS
 eas build --platform ios
@@ -165,7 +159,7 @@ All apps follow the "Just One Job" philosophy:
    {
      "scripts": {
        "dev:new-app": "cd apps/new-app && bunx expo start",
-       "build:netlify:new-app": "npm install && npm --workspace=apps/new-app run build:web"
+       "build:netlify:new-app": "bun install && cd apps/new-app && bun run build:web"
      }
    }
    ```
@@ -189,7 +183,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed contribution guidelines.
 - **Expo** (~54.0.23) - Development platform
 - **TypeScript** (~5.9.2) - Type safety
 - **React** (19.1.0) - UI library
-- **Bun** - Package manager (recommended) or npm
+- **Bun** - Package manager (npm is disabled)
 - **EAS Build** - Mobile app builds
 - **Netlify** - Web deployment
 

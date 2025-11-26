@@ -5,14 +5,19 @@
     "apps/*",
     "packages/*"
   ],
+  "engines": {
+    "npm": "please-use-bun",
+    "bun": ">=1.0.0"
+  },
   "scripts": {
+    "preinstall": "npx only-allow bun",
     "dev:tip": "cd apps/tip-calculator && bunx expo start",
     "web:tip": "cd apps/tip-calculator && bunx expo start --web",
     "build:web:tip": "cd apps/tip-calculator && bun run build:web",
     "dev:deal": "cd apps/deal-steal && bunx expo start",
     "web:deal": "cd apps/deal-steal && bunx expo start --web",
     "build:web:deal": "cd apps/deal-steal && bun run build:web",
-    "build:netlify:tip": "npm install && npm --workspace=apps/tip-calculator run build:web",
-    "build:netlify:deal": "npm install && npm --workspace=apps/deal-steal run build:web"
+    "build:netlify:tip": "bun install && cd apps/tip-calculator && bun run build:web",
+    "build:netlify:deal": "bun install && cd apps/deal-steal && bun run build:web"
   }
 }

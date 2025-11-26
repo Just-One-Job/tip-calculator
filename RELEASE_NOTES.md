@@ -56,11 +56,11 @@ All features listed in README are fully implemented:
 - ✅ ESLint configuration added (`.eslintrc.js`)
 - ✅ TypeScript strict mode enabled
 - ✅ Test scripts added to package.json:
-  - `npm test` - Run tests
-  - `npm test:watch` - Watch mode
-  - `npm test:coverage` - Coverage report
-  - `npm run lint` - Lint code
-  - `npm run type-check` - TypeScript check
+  - `bun test` - Run tests
+  - `bun test:watch` - Watch mode
+  - `bun test:coverage` - Coverage report
+  - `bun run lint` - Lint code
+  - `bun run type-check` - TypeScript check
 
 ## Track 3: App Store Preparation ✅
 
@@ -121,14 +121,14 @@ All features listed in README are fully implemented:
 ### Immediate (Before Release)
 1. **Install test dependencies:**
    ```bash
-   npm install --save-dev jest @testing-library/react-native @testing-library/jest-native @types/jest eslint-config-expo @typescript-eslint/parser @typescript-eslint/eslint-plugin
+   bun add --dev jest @testing-library/react-native @testing-library/jest-native @types/jest eslint-config-expo @typescript-eslint/parser @typescript-eslint/eslint-plugin
    ```
 
 2. **Run tests and checks:**
    ```bash
-   npm test
-   npm run type-check
-   npm run lint
+   bun test
+   bun run type-check
+   bun run lint
    ```
 
 3. **Test on real devices:**

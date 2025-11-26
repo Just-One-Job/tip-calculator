@@ -6,10 +6,10 @@ Quick setup instructions for getting the Tip Calculator app running on your mach
 
 ### Required
 - **Node.js** (v18 or later) - [Download](https://nodejs.org/)
-- **npm** (comes with Node.js) or **yarn**
+- **Bun** (package manager) - [Download](https://bun.sh/)
 
 ### Recommended
-- **Expo CLI** - Install globally: `npm install -g expo-cli`
+- **Expo CLI** - Install globally: `bun add -g expo-cli`
 - **Git** - For version control
 
 ### For iOS Development (Mac only)
@@ -37,18 +37,18 @@ Quick setup instructions for getting the Tip Calculator app running on your mach
 
 2. **Install dependencies**
    ```bash
-   npm install
+   bun install
    ```
-   
+
    If you encounter issues, try:
    ```bash
-   rm -rf node_modules package-lock.json
-   npm install
+   rm -rf node_modules bun.lock
+   bun install
    ```
 
 3. **Start the development server**
    ```bash
-   npm start
+   bun start
    ```
 
 4. **Run on your preferred platform**
@@ -62,10 +62,10 @@ Quick setup instructions for getting the Tip Calculator app running on your mach
 ### Common Issues
 
 **Issue: Metro bundler won't start**
-- Solution: Clear cache with `npm start -- --clear`
+- Solution: Clear cache with `bun start -- --clear`
 
 **Issue: Dependencies installation fails**
-- Solution: Delete `node_modules` and `package-lock.json`, then run `npm install` again
+- Solution: Delete `node_modules` and `bun.lock`, then run `bun install` again
 
 **Issue: iOS Simulator not opening**
 - Solution: Make sure Xcode is installed and Command Line Tools are set up: `xcode-select --install`

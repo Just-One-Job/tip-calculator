@@ -1,17 +1,17 @@
 [build]
   # Base directory - must be repo root for monorepo workspace support
   base = "../.."
-  
+
   # Build command - runs from repo root, installs deps and builds this app
-  command = "npm run build:netlify:deal"
-  
+  command = "bun run build:netlify:deal"
+
   # Publish directory - relative to base (repo root)
   publish = "apps/deal-steal/dist"
 
 [build.environment]
   # Use Node.js 22 (matching your local setup)
   NODE_VERSION = "22"
-  
+
   # Enable npm workspaces
   NPM_FLAGS = "--legacy-peer-deps"
 

@@ -71,13 +71,13 @@ This checklist tracks progress toward shipping Tip Calculator v1.0.0.
 ### Dependencies Installation
 - [ ] Install test dependencies:
   ```bash
-  npm install --save-dev jest @testing-library/react-native @testing-library/jest-native @types/jest eslint-config-expo @typescript-eslint/parser @typescript-eslint/eslint-plugin
+  bun add --dev jest @testing-library/react-native @testing-library/jest-native @types/jest eslint-config-expo @typescript-eslint/parser @typescript-eslint/eslint-plugin
   ```
 
 ### Testing
-- [ ] Run tests: `npm test`
-- [ ] Run type check: `npm run type-check`
-- [ ] Run linter: `npm run lint`
+- [ ] Run tests: `bun test`
+- [ ] Run type check: `bun run type-check`
+- [ ] Run linter: `bun run lint`
 - [ ] Fix any issues found
 
 ### App Store Submission Prep

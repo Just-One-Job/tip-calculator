@@ -1,18 +1,18 @@
 # Netlify Deployment Guide
 
-This monorepo uses `file:` links for workspace dependencies, which are compatible with both npm and Bun. This makes deployment straightforward on Netlify.
+This monorepo uses `file:` links for workspace dependencies, which are compatible with both Bun and npm. This makes deployment straightforward on Netlify.
 
 ## How It Works
 
-1. **Local Development**: Uses Bun (or npm) with `file:` protocol for workspace dependencies
-2. **Netlify CI**: Uses npm with the same `file:` links - no conversion needed
+1. **Local Development**: Uses Bun with `file:` protocol for workspace dependencies
+2. **Netlify CI**: Uses Bun with the same `file:` links - no conversion needed
 
 ## Build Process
 
 The build process on Netlify:
 
-1. **Dependency installation**: Netlify runs `npm install` at the root (monorepo-aware via npm workspaces)
-2. **Build**: Runs `npm --workspace=apps/tip-calculator run build:web` to build the app
+1. **Dependency installation**: Netlify runs `bun install` at the root (monorepo-aware via Bun workspaces)
+2. **Build**: Runs `cd apps/tip-calculator && bun run build:web` to build the app
 3. **Publish**: Publishes the `apps/tip-calculator/dist` directory
 
 ## Configuration
@@ -23,7 +23,7 @@ Each app has its own `netlify.toml` file in its directory (e.g., `apps/tip-calcu
 
 The `netlify.toml` file configures:
 - Base directory: `../..` (repo root, required for monorepo workspace support)
-- Build command: `npm run build:netlify:tip` (runs from repo root)
+- Build command: `bun run build:netlify:tip` (runs from repo root)
 - Publish directory: `apps/tip-calculator/dist` (relative to base)
 - Node.js version: 22
 
@@ -33,8 +33,8 @@ The `netlify.toml` file configures:
 
 ### Scripts
 
-- `build:netlify:tip`: Installs dependencies and builds the tip-calculator app using npm workspaces
-- `build:netlify:deal`: Installs dependencies and builds the deal-steal app using npm workspaces
+- `build:netlify:tip`: Installs dependencies and builds the tip-calculator app using Bun
+- `build:netlify:deal`: Installs dependencies and builds the deal-steal app using Bun
 
 ## Workspace Dependencies
 
@@ -50,8 +50,8 @@ All workspace packages use `file:` links in their dependencies:
 ```
 
 This approach:
-- ✅ Works with npm (used by Netlify)
-- ✅ Works with Bun (for local development)
+- ✅ Works with Bun (primary package manager)
+- ✅ Works with npm (fallback compatibility)
 - ✅ No conversion scripts needed
 - ✅ Simple and reliable
 
@@ -61,20 +61,20 @@ When adding a new app that needs to be deployed:
 
 1. Add a new build script in root `package.json`:
    ```json
-   "build:netlify:new-app": "npm install && npm --workspace=apps/new-app run build:web"
+   "build:netlify:new-app": "bun install && cd apps/new-app && bun run build:web"
    ```
 
 2. Create a `netlify.toml` file in the app's directory (e.g., `apps/new-app/netlify.toml`):
    ```toml
    [build]
      base = "../.."
-     command = "npm run build:netlify:new-app"
+     command = "bun run build:netlify:new-app"
      publish = "apps/new-app/dist"
-   
+
    [build.environment]
      NODE_VERSION = "22"
      NPM_FLAGS = "--legacy-peer-deps"
-   
+
    [[redirects]]
      from = "/*"
      to = "/index.html"
@@ -83,15 +83,15 @@ When adding a new app that needs to be deployed:
 
 3. Create a new Netlify site and configure it to use the app's `netlify.toml` file
 
-## Using Bun on Netlify (Optional)
+## Bun on Netlify
 
-Netlify now supports Bun! If you want to use Bun instead of npm:
+This project uses Bun as the primary package manager:
 
-1. Ensure `bun.lockb` is committed to your repo
-2. Netlify will automatically detect it and use `bun install`
-3. Update build commands to use `bun` instead of `npm`:
+1. The `bun.lock` file is committed to the repo
+2. Netlify automatically detects it and uses `bun install`
+3. Build commands use `bun` with workspace filters:
    ```json
-   "build:netlify:tip": "bun install && bun --workspace=apps/tip-calculator run build:web"
+   "build:netlify:tip": "bun install && cd apps/tip-calculator && bun run build:web"
    ```
 
 ## Troubleshooting
@@ -109,5 +109,5 @@ Netlify now supports Bun! If you want to use Bun instead of npm:
 
 ### Can't run `npm install` locally
 
-- Use `bun install` instead (recommended for local development)
-- Or use `npm install` directly - it works with `file:` links
+- This is intentional! Use `bun install` instead
+- npm is disabled in this project to prevent lock file conflicts
