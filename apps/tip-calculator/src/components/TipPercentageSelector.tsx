@@ -1,15 +1,15 @@
+import { spacing, useTheme } from '@just-one-job/theme';
+import { triggerHaptic } from '@just-one-job/utils';
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  TextInput,
   Modal,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
   useWindowDimensions,
+  View,
 } from 'react-native';
-import { useTheme, spacing } from '@just-one-job/theme';
-import { triggerHaptic } from '@just-one-job/utils';
 
 interface TipPercentageSelectorProps {
   value: number;
@@ -23,7 +23,8 @@ export const TipPercentageSelector: React.FC<TipPercentageSelectorProps> = ({
   onChange,
 }) => {
   const { width } = useWindowDimensions();
-  const isSmallDevice = width < 380;
+  const isSmallDevice = width < 421;
+
   const { colors } = useTheme();
   const [showCustomModal, setShowCustomModal] = useState(false);
   const [customValue, setCustomValue] = useState('');
@@ -67,9 +68,8 @@ export const TipPercentageSelector: React.FC<TipPercentageSelectorProps> = ({
           <TouchableOpacity
             key={percent}
             style={[
-              styles.button,
+              isSmallDevice ? styles.buttonSmall : styles.button,
               { backgroundColor: colors.surface, borderColor: colors.border },
-              isSmallDevice && styles.buttonSmall,
               value === percent && { backgroundColor: colors.primary, borderColor: colors.primary },
             ]}
             onPress={() => handlePresetPress(percent)}
@@ -88,9 +88,8 @@ export const TipPercentageSelector: React.FC<TipPercentageSelectorProps> = ({
         ))}
         <TouchableOpacity
           style={[
-            styles.button,
+            isSmallDevice ? styles.buttonSmall : styles.button,
             { backgroundColor: colors.surface, borderColor: colors.border },
-            isSmallDevice && styles.buttonSmall,
             !isPresetSelected && { backgroundColor: colors.primary, borderColor: colors.primary },
           ]}
           onPress={handleCustomPress}
@@ -125,8 +124,8 @@ export const TipPercentageSelector: React.FC<TipPercentageSelectorProps> = ({
                 const numericText = text.replace(/[^0-9.]/g, '');
                 const parts = numericText.split('.');
                 // Prevent multiple decimals
-                const cleaned = parts.length > 2 
-                  ? parts[0] + '.' + parts.slice(1).join('') 
+                const cleaned = parts.length > 2
+                  ? parts[0] + '.' + parts.slice(1).join('')
                   : numericText;
                 // Limit to 500
                 const numValue = parseFloat(cleaned);
@@ -189,17 +188,24 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    minWidth: 72,
+    minWidth: 80,
     borderRadius: 12,
-    padding: spacing.md,
+    paddingHorizontal: spacing.md - 2,
+    paddingVertical: spacing.md - 2,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 2,
-    minHeight: 50,
+    height: 54,
   },
   buttonSmall: {
-    paddingVertical: spacing.sm + 2,
-    paddingHorizontal: spacing.md - 2,
+    flex: 1,
+    minWidth: 72,
+    borderRadius: 12,
+    paddingHorizontal: spacing.md - 4,
+    paddingVertical: spacing.sm,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
     height: 40,
   },
   buttonText: {
@@ -207,7 +213,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   buttonTextSmall: {
-    fontSize: 15,
+    fontSize: 14,
   },
   modalOverlay: {
     flex: 1,

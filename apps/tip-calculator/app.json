@@ -8,7 +8,7 @@
     "description": "Fast, privacy-first tip calculator by Just One Job Apps. No ads, no tracking.",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#151e2a"
     },
@@ -16,7 +16,9 @@
       "supportsTablet": false,
       "bundleIdentifier": "com.justonejobapps.tipandsplit",
       "infoPlist": {
-        "ITSAppUsesNonExemptEncryption": false
+        "ITSAppUsesNonExemptEncryption": false,
+        "WKAppBoundDomains": ["localhost"],
+        "WKWebViewInspectable": true
       }
     },
     "android": {
